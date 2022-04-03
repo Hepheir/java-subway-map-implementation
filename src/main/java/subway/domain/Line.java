@@ -1,7 +1,6 @@
 package subway.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -67,10 +66,6 @@ public class Line {
 
     protected void addStation(Station station, int index) {
         this.stations.add(index, station);
-    }
-
-    protected void addStations(Station... stations) {
-        Arrays.asList(stations).forEach(this::addStation);
     }
 
     protected void deleteStation(Station station) throws IllegalArgumentException {
