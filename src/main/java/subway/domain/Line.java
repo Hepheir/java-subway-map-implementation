@@ -56,7 +56,7 @@ public class Line {
         Station.getStation(name).addLine(this);
     }
 
-    public void register() {
+    public void register() throws IllegalArgumentException {
         Line.registerLine(this);
     }
 
