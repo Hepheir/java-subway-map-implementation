@@ -39,7 +39,7 @@ public class Station {
         this.name = name;
         this.checkName();
         this.checkDuplicate();
-        Station.registerStation(this);
+        this.register();
     }
 
     public String getName() {
@@ -77,6 +77,10 @@ public class Station {
         if (StationRepository.hasStation(this)) {
             throw new IllegalArgumentException("이미 등록된 역 이름입니다.");
         }
+    }
+
+    private void register() {
+        Station.registerStation(this);
     }
 
     private void delete() throws IllegalArgumentException {
