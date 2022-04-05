@@ -15,9 +15,21 @@ public class Line {
     private final String name;
     private final List<Station> stations = new LinkedList<>();
 
+    private static void checkValid(String name) throws InvalidStationNameException {
+        if (name.length() < MINIMUM_NAME_LENGTH) {
+            throw new InvalidStationNameException();
+        }
+    }
+
+    private static void checkEnough(Station[] stations) throws NotEnoughStationsException {
+        if (stations.length < MINIMUM_STATIONS_SIZE) {
+            throw new NotEnoughStationsException();
+        }
+    }
+
     public Line(String name, Station... stations) throws InvalidStationNameException, NotEnoughStationsException {
-        this.checkValid(name);
-        this.checkEnough(stations);
+        Line.checkValid(name);
+        Line.checkEnough(stations);
         this.name = name;
         Arrays.asList(stations).forEach(this::add);
     }
@@ -41,18 +53,6 @@ public class Line {
     public void delete(Station station) throws NotEnoughStationsException, StationNotFoundException {
         this.checkDeletable(station);
         this.stations.remove(station);
-    }
-
-    private void checkValid(String name) throws InvalidStationNameException {
-        if (name.length() < MINIMUM_NAME_LENGTH) {
-            throw new InvalidStationNameException();
-        }
-    }
-
-    private void checkEnough(Station[] stations) throws NotEnoughStationsException {
-        if (stations.length < MINIMUM_STATIONS_SIZE) {
-            throw new NotEnoughStationsException();
-        }
     }
 
     private void checkDeletable(Station station) throws NotEnoughStationsException, StationNotFoundException {
