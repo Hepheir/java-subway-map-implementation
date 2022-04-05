@@ -46,7 +46,7 @@ public class Line {
         this.stations.add(station);
     }
 
-    public void add(Station station, int index) {
+    public void add(Station station, int index) throws IndexOutOfBoundsException {
         this.stations.add(index, station);
     }
 
