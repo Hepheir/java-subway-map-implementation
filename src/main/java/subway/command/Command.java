@@ -1,36 +1,43 @@
 package subway.command;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
+import subway.enums.ScreenType;
+
 public class Command {
+    private List<ScreenType> allowedScreenTypes;
     private Character key;
-    private String label;
-    private Runnable action;
-    private CommandRepository repository;
+    private String description;
+    private Function<ScreenType, Optional<ScreenType>> action;
 
-    protected Command(CommandRepository repository, Character key, String label, Runnable action) {
+    public Command(
+        Character key,
+        String description,
+        Function<ScreenType, Optional<ScreenType>> action,
+        ScreenType... allowedScreenTypes
+    ) {
+        this.allowedScreenTypes = Arrays.asList(allowedScreenTypes);
         this.key = key;
-        this.label = label;
+        this.description = description;
         this.action = action;
-        this.repository = repository;
-
-        this.checkDuplicate();
-        repository.addCommand(this);
     }
 
-    public String getLabel() {
-        return this.label;
+    public List<ScreenType> getAllowedScreenTypes() {
+        return this.allowedScreenTypes;
     }
 
     public Character getKey() {
         return this.key;
     }
 
-    public void execute() {
-        this.action.run();
+    public String getDescription() {
+        return this.description;
     }
 
-    private void checkDuplicate() throws IllegalArgumentException {
-        if (this.repository.hasCommand(this)) {
-            throw new IllegalArgumentException("해당 키바인드가 이미 사용중입니다.");
-        }
+    public Optional<ScreenType> executeFrom(ScreenType screenType) {
+        return this.action.apply(screenType);
     }
 }
