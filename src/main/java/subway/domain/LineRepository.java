@@ -5,22 +5,42 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import subway.exception.LineAlreadyExsitsException;
+import subway.exception.LineNotFoundException;
+
 public class LineRepository {
     private static final List<Line> lines = new LinkedList<>();
 
-    protected static List<Line> lines() {
+    public static List<Line> lines() {
         return Collections.unmodifiableList(lines);
     }
 
-    protected static void add(Line line) {
+    public static void add(Line line) throws LineAlreadyExsitsException {
+        checkAddable(line);
         lines.add(line);
     }
 
-    protected static void delete(Line line) {
+    public static void delete(Line line) throws LineNotFoundException {
+        checkDeletable(line);
         lines.remove(line);
     }
 
-    protected static boolean has(Line line) {
-        return lines.stream().map(Line::getName).collect(Collectors.toList()).contains(line.getName());
+    private static boolean contains(Line line) {
+        return lines.stream()
+            .map(Line::getName)
+            .collect(Collectors.toList())
+            .contains(line.getName());
+    }
+
+    private static void checkAddable(Line line) throws LineAlreadyExsitsException {
+        if (contains(line)) {
+            throw new LineAlreadyExsitsException();
+        }
+    }
+
+    private static void checkDeletable(Line line) throws LineNotFoundException {
+        if (!contains(line)) {
+            throw new LineNotFoundException();
+        }
     }
 }
