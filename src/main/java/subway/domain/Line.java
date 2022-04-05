@@ -12,7 +12,7 @@ public class Line {
 
     public Line(String name) throws IllegalArgumentException {
         this.name = name;
-        this.checkName();
+        this.checkValid(name);
     }
 
     public List<Station> stations() {
@@ -23,15 +23,15 @@ public class Line {
         return name;
     }
 
-    protected void addStation(Station station) {
+    protected void add(Station station) {
         this.stations.add(station);
     }
 
-    protected void addStation(Station station, int index) {
+    protected void add(Station station, int index) {
         this.stations.add(index, station);
     }
 
-    protected void deleteStation(Station station) throws IllegalArgumentException {
+    protected void delete(Station station) throws IllegalArgumentException {
         if (this.stations.size() <= Line.MINIMUM_STATIONS_SIZE) {
             throw new IllegalArgumentException("노선에 포함된 역이 두개 이하일 때는 역을 제거할 수 없습니다.");
         }
@@ -40,8 +40,8 @@ public class Line {
         }
     }
 
-    private void checkName() throws IllegalArgumentException {
-        if (this.name.length() < MINIMUM_NAME_LENGTH) {
+    private void checkValid(String name) throws IllegalArgumentException {
+        if (name.length() < MINIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException("지하철 노선 이름은 2글자 이상이어야 합니다.");
         }
     }
