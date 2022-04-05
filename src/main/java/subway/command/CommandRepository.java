@@ -1,40 +1,41 @@
 package subway.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import subway.enums.ScreenType;
+import subway.exception.CommandAlreadyExsitsException;
+
 public class CommandRepository {
-    private final List<Command> commands = new ArrayList<>();
+    private static final List<Command> commands = new ArrayList<>();
 
-    public Command getCommand(Character key) throws IllegalArgumentException {
-        Optional<Command> foundCommand = this.commands().stream()
-            .filter(command -> command.getKey().equals(key)).findFirst();
-        if (!foundCommand.isPresent()) {
-            throw new IllegalArgumentException("선택할 수 없는 기능입니다.");
-        }
-        return foundCommand.get();
-    }
-
-    public Command createCommand(Character key, String label, Runnable action) {
-        return new Command(this, key, label, action);
-    }
-
-    public List<Command> commands() {
+    public static List<Command> commands() {
         return Collections.unmodifiableList(commands);
     }
 
-    protected void addCommand(Command command) {
+    public static void add(Command... commands) throws CommandAlreadyExsitsException {
+        Arrays.asList(commands).forEach(CommandRepository::add);
+    }
+
+    public static List<Command> getCommandsOf(ScreenType screenTypes) {
+        return commands().stream()
+            .filter((cmd) -> cmd.getAllowedScreenTypes().contains(screenTypes))
+            .collect(Collectors.toList());
+    }
+
+    // Helpers
+
+    private static void add(Command command) throws CommandAlreadyExsitsException {
+        checkAddable(command);
         commands.add(command);
     }
 
-    protected void deleteCommand(Command command) {
-        commands.remove(command);
-    }
-
-    protected boolean hasCommand(Command command) {
-        return commands.stream().map(Command::getKey).collect(Collectors.toList()).contains(command.getKey());
+    private static void checkAddable(Command command) throws CommandAlreadyExsitsException {
+        if (commands().stream().anyMatch(command::equals)) {
+            throw new CommandAlreadyExsitsException();
+        }
     }
 }
