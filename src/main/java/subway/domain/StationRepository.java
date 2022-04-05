@@ -1,12 +1,12 @@
 package subway.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class StationRepository {
-    private static final List<Station> stations = new ArrayList<>();
+    private static final List<Station> stations = new LinkedList<>();
 
     protected static List<Station> stations() {
         return Collections.unmodifiableList(stations);

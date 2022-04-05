@@ -1,8 +1,8 @@
 package subway.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import subway.exception.InvalidStationNameException;
@@ -13,7 +13,7 @@ public class Line {
     private final static int MINIMUM_NAME_LENGTH = 2;
     private final static int MINIMUM_STATIONS_SIZE = 2;
     private final String name;
-    private final List<Station> stations = new ArrayList<>();
+    private final List<Station> stations = new LinkedList<>();
 
     public Line(String name, Station... stations) throws InvalidStationNameException, NotEnoughStationsException {
         this.checkValid(name);
