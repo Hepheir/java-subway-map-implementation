@@ -1,6 +1,7 @@
 package subway.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,9 +11,11 @@ public class Line {
     private final String name;
     private final List<Station> stations = new ArrayList<>();
 
-    public Line(String name) throws IllegalArgumentException {
-        this.name = name;
+    public Line(String name, Station... stations) throws IllegalArgumentException {
         this.checkValid(name);
+        this.checkEnough(stations);
+        this.name = name;
+        Arrays.asList(stations).forEach(this::add);
     }
 
     public List<Station> stations() {
@@ -23,15 +26,15 @@ public class Line {
         return name;
     }
 
-    protected void add(Station station) {
+    public void add(Station station) {
         this.stations.add(station);
     }
 
-    protected void add(Station station, int index) {
+    public void add(Station station, int index) {
         this.stations.add(index, station);
     }
 
-    protected void delete(Station station) throws IllegalArgumentException {
+    public void delete(Station station) throws IllegalArgumentException {
         this.checkDeletable(station);
         this.stations.remove(station);
     }
@@ -39,6 +42,12 @@ public class Line {
     private void checkValid(String name) throws IllegalArgumentException {
         if (name.length() < MINIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException("지하철 노선 이름은 2글자 이상이어야 합니다.");
+        }
+    }
+
+    private void checkEnough(Station[] stations) throws IllegalArgumentException {
+        if (stations.length < MINIMUM_STATIONS_SIZE) {
+            throw new IllegalArgumentException("노선을 생성하기 위해 상행종점역과 하행종점역을 입력해야 합니다.");
         }
     }
 
