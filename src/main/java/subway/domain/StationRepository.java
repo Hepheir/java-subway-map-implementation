@@ -3,7 +3,6 @@ package subway.domain;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import subway.exception.OccupiedStationException;
 import subway.exception.StationAlreadyExsitsException;
@@ -29,8 +28,9 @@ public class StationRepository {
     private static boolean contains(Station station) {
         return stations.stream()
             .map(Station::getName)
-            .collect(Collectors.toList())
-            .contains(station.getName());
+            .filter(name -> station.getName().equals(name))
+            .findAny()
+            .isPresent();
     }
 
     private static void checkAddable(Station station) throws StationAlreadyExsitsException {

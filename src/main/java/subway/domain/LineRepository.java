@@ -3,7 +3,6 @@ package subway.domain;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import subway.exception.LineAlreadyExsitsException;
 import subway.exception.LineNotFoundException;
@@ -28,8 +27,9 @@ public class LineRepository {
     private static boolean contains(Line line) {
         return lines.stream()
             .map(Line::getName)
-            .collect(Collectors.toList())
-            .contains(line.getName());
+            .filter(name -> line.getName().equals(name))
+            .findAny()
+            .isPresent();
     }
 
     private static void checkAddable(Line line) throws LineAlreadyExsitsException {
