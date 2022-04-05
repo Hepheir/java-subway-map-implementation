@@ -44,7 +44,7 @@ public class Model {
         NotEnoughStationsException,
         LineAlreadyExsitsException
     {
-        Station[] stations = (Station[]) getStations(namesOfStations).toArray();
+        Station[] stations = getStations(namesOfStations).stream().toArray(Station[]::new);
         Line newLine = new Line(name, stations);
         LineRepository.add(newLine);
     }
