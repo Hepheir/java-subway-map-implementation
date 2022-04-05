@@ -1,51 +1,45 @@
 package subway.controller;
 
-import subway.Client;
-import subway.domain.Station;
+import java.util.Optional;
+
+import subway.enums.ScreenType;
 import subway.io.Input;
+import subway.model.Model;
 import subway.view.View;
 
 public class StationController extends Controller {
-    public StationController() {
-        super("역 관리 화면");
-        commandRepository.createCommand('1', "역 등록", this::addStation);
-        commandRepository.createCommand('2', "역 삭제", this::deleteStation);
-        commandRepository.createCommand('3', "역 조회", this::showStations);
-        commandRepository.createCommand('B', "돌아가기", Client::goBack);
-    }
-
-    private void addStation() {
+    public static Optional<ScreenType> addStation(ScreenType parentScreenType) {
         try {
             View.printHeader("등록할 역 이름을 입력하세요.");
-            Station.createStation(Input.readLine());
+            Model.createStation(Input.readLine());
             View.printEmptyLine();
             View.printInfo("지하철 역이 등록되었습니다.");
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             View.printEmptyLine();
             View.printError(e.getMessage());
-        } finally {
-            View.printEmptyLine();
-            Client.goBack();
         }
+        View.printEmptyLine();
+        return Optional.of(ScreenType.MAIN);
     }
 
-    private void deleteStation() {
+    public static Optional<ScreenType> deleteStation(ScreenType parentScreenType) {
         try {
             View.printHeader("삭제할 역 이름을 입력하세요.");
-            Station.deleteStation(Input.readLine());
+            Model.deleteStation(Input.readLine());
             View.printEmptyLine();
             View.printInfo("지하철 역이 삭제되었습니다.");
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             View.printEmptyLine();
             View.printError(e.getMessage());
-        } finally {
-            View.printEmptyLine();
-            Client.goBack();
         }
+        View.printEmptyLine();
+        return Optional.of(ScreenType.MAIN);
     }
 
-    private void showStations() {
-        View.renderStationList();
-        Client.goBack();
+    public static Optional<ScreenType> listStation(ScreenType parentScreenType) {
+        View.printHeader("역 목록");
+        Model.getAllStationNames().forEach(View::printInfo);
+        View.printEmptyLine();
+        return Optional.of(ScreenType.MAIN);
     }
 }

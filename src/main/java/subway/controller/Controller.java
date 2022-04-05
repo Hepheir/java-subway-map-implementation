@@ -1,53 +1,63 @@
 package subway.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import subway.command.Command;
 import subway.command.CommandRepository;
+import subway.enums.ScreenType;
+import subway.exception.CommandNotFoundException;
 import subway.io.Input;
 import subway.view.View;
 
 public class Controller {
-    private final String label;
-    protected final CommandRepository commandRepository = new CommandRepository();
-
-    public Controller(String label) {
-        this.label = label;
+    public static Optional<ScreenType> render(ScreenType screenType) {
+        View.printScreenName(screenType.getValue());
+        renderCommandsOutOf(screenType);
+        return promptComandFrom(screenType).executeFrom(screenType);
     }
 
-    public final String getLabel() {
-        return this.label;
+    public static Optional<ScreenType> back(ScreenType parentScreenType) {
+        return Optional.of(parentScreenType);
     }
 
-    public final List<Command> commands() {
-        return commandRepository.commands();
+    public static Optional<ScreenType> quit(ScreenType parentScreenType) {
+        return Optional.empty();
     }
 
-    private final void promptAction() {
-        boolean didCommandExecute = false;
-        Command selectedCommand;
-        do {
-            try {
-                View.renderCommandGuide();
-                selectedCommand = promptCommand();
-                View.printEmptyLine();
+    // Helpers
 
-                selectedCommand.execute();
-                didCommandExecute = true;
-            } catch (IllegalArgumentException e) {
-                View.printEmptyLine();
-                View.printError(e.getMessage());
-                View.printEmptyLine();
+    private static void renderCommandsOutOf(ScreenType screenType) {
+        CommandRepository.getCommandsOf(screenType).forEach(Controller::renderCommand);
+    }
+
+    private static Command promptComandFrom(ScreenType screenType) {
+        Character key;
+        List<Command> availableCommands = CommandRepository.getCommandsOf(screenType);
+        Optional<Command> selectedCommand = Optional.empty();
+        while (true) {
+            View.printEmptyLine();
+            View.printCommandPromptMessage();
+            key = Input.readChar();
+            View.printEmptyLine();
+
+            selectedCommand = findCommandOutOf(availableCommands, key);
+
+            if (selectedCommand.isPresent()) {
+                return selectedCommand.get();
             }
-        } while (!didCommandExecute);
+
+            View.printError(new CommandNotFoundException().getMessage());
+        }
     }
 
-    private final Command promptCommand() throws IllegalArgumentException {
-        return commandRepository.getCommand(Input.readChar());
+    private static void renderCommand(Command command) {
+        View.printCommandFormat(command.getKey(), command.getDescription());
     }
 
-    public final void render() {
-        View.renderController(this);
-        this.promptAction();
+    private static Optional<Command> findCommandOutOf(List<Command> availableCommands, Character key) {
+        return availableCommands.stream()
+            .filter(cmd -> cmd.getKey().equals(key))
+            .findAny();
     }
 }
