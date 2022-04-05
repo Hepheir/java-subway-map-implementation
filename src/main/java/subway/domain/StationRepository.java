@@ -12,15 +12,15 @@ public class StationRepository {
         return Collections.unmodifiableList(stations);
     }
 
-    protected static void addStation(Station station) {
+    protected static void add(Station station) {
         stations.add(station);
     }
 
-    protected static void deleteStation(Station station) {
+    protected static void delete(Station station) {
         stations.remove(station);
     }
 
-    protected static boolean hasStation(Station station) {
+    protected static boolean has(Station station) {
         return stations.stream().map(Station::getName).collect(Collectors.toList()).contains(station.getName());
     }
 }
