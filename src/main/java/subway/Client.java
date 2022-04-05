@@ -1,29 +1,16 @@
 package subway;
 
-import java.util.Stack;
+import java.util.Optional;
 
 import subway.controller.Controller;
-import subway.controller.MainController;
+import subway.enums.ScreenType;
 
 public class Client {
-    private static Stack<Controller> contollerStack = new Stack<>();
-
     public static void run() {
-        Client.open(new MainController());
-        while (!contollerStack.isEmpty()) {
-            contollerStack.peek().render();
-        };
-    }
+        Optional<ScreenType> nextScreen = Optional.of(ScreenType.MAIN);
 
-    public static void open(Controller controller) {
-        contollerStack.add(controller);
-    }
-
-    public static void goBack() {
-        contollerStack.pop();
-    }
-
-    public static void close() {
-        contollerStack.clear();
+        while (nextScreen.isPresent()) {
+            nextScreen = Controller.render(nextScreen.get());
+        }
     }
 }
