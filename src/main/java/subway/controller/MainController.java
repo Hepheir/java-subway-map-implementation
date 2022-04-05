@@ -22,7 +22,8 @@ public class MainController {
     public static Optional<ScreenType> openSubwayMap(ScreenType parentScreenType) {
         View.printScreenName(parentScreenType.getValue());
         Model.getAllLineNames().forEach(lineName -> {
-            View.printLineOfSubwayMap(lineName, (String[]) Model.getAllStationNamesOfLine(lineName).toArray());
+            String[] stationNames = Model.getAllStationNamesOfLine(lineName).stream().toArray(String[]::new);
+            View.printLineOfSubwayMap(lineName, stationNames);
             View.printEmptyLine();
         });
         return Optional.of(ScreenType.MAIN);
