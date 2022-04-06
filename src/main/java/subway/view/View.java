@@ -1,7 +1,5 @@
 package subway.view;
 
-import java.util.Arrays;
-
 import subway.io.Output;
 
 public class View {
@@ -41,11 +39,5 @@ public class View {
 
     public static final void printCommandPromptMessage() {
         printHeader("원하는 기능을 선택하세요.");
-    }
-
-    public static final void printLineOfSubwayMap(String lineName, String... stationNames) {
-        printInfo(lineName);
-        printInfo("---");
-        Arrays.asList(stationNames).forEach(View::printInfo);
     }
 }

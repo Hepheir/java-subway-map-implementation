@@ -25,8 +25,6 @@ public class Controller {
         return Optional.empty();
     }
 
-    // Helpers
-
     private static void renderCommandsOutOf(ScreenType screenType) {
         CommandRepository.getCommandsOf(screenType).forEach(Controller::renderCommand);
     }
@@ -40,13 +38,10 @@ public class Controller {
             View.printCommandPromptMessage();
             key = Input.readChar();
             View.printEmptyLine();
-
             selectedCommand = findCommandOutOf(availableCommands, key);
-
             if (selectedCommand.isPresent()) {
                 return selectedCommand.get();
             }
-
             View.printError(new CommandNotFoundException().getMessage());
         }
     }

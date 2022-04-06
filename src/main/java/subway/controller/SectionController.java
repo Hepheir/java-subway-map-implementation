@@ -5,6 +5,7 @@ import java.util.Optional;
 import subway.enums.ScreenType;
 import subway.io.Input;
 import subway.model.Model;
+import subway.view.SectionView;
 import subway.view.View;
 
 public class SectionController extends Controller {
@@ -13,23 +14,20 @@ public class SectionController extends Controller {
         String stationName;
         int index;
         try {
-            View.printHeader("노선을 입력하세요.");
+            SectionView.askLineName();
             lineName = Input.readLine();
             View.printEmptyLine();
-
-            View.printHeader("역이름을 입력하세요.");
+            SectionView.askStationName();
             stationName = Input.readLine();
             View.printEmptyLine();
-
-            View.printHeader("순서를 입력하세요.");
+            SectionView.askOrder();
             index = Input.readInt();
             View.printEmptyLine();
-
             Model.addSection(lineName, stationName, index);
-            View.printInfo("구간이 등록되었습니다.");
+            SectionView.printSectionAddedSuccessfully();
         } catch (NumberFormatException e) {
             View.printEmptyLine();
-            View.printError("숫자가 아닙니다.");
+            SectionView.printErrorNotANumber();
         } catch (IllegalArgumentException e) {
             View.printEmptyLine();
             View.printError(e.getMessage());
@@ -42,16 +40,14 @@ public class SectionController extends Controller {
         String lineName;
         String stationName;
         try {
-            View.printHeader("삭제할 구간의 노선을 입력하세요.");
+            SectionView.askLineNameToDelete();
             lineName = Input.readLine();
             View.printEmptyLine();
-
-            View.printHeader("삭제할 구간의 역을 입력하세요.");
+            SectionView.askStationNameToDelete();
             stationName = Input.readLine();
             View.printEmptyLine();
-
             Model.deleteSection(lineName, stationName);
-            View.printInfo("지하철 역이 삭제되었습니다.");
+            SectionView.printSectionDeletedSuccessfully();
         } catch (IllegalArgumentException e) {
             View.printEmptyLine();
             View.printError(e.getMessage());

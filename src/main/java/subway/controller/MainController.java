@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import subway.enums.ScreenType;
 import subway.model.Model;
+import subway.view.MainView;
 import subway.view.View;
 
 public class MainController {
@@ -22,8 +23,10 @@ public class MainController {
     public static Optional<ScreenType> openSubwayMap(ScreenType parentScreenType) {
         View.printScreenName(parentScreenType.getValue());
         Model.getAllLineNames().forEach(lineName -> {
-            String[] stationNames = Model.getAllStationNamesOfLine(lineName).stream().toArray(String[]::new);
-            View.printLineOfSubwayMap(lineName, stationNames);
+            MainView.printLineName(lineName);
+            MainView.printLineAndStationsSeperator();
+            Model.getAllStationNamesOfLine(lineName)
+                .forEach(MainView::printStationName);
             View.printEmptyLine();
         });
         return Optional.of(ScreenType.MAIN);
