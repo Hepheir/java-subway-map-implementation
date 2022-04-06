@@ -65,31 +65,37 @@ public class Model {
             .collect(Collectors.toList());
     }
 
-    // Helpers
-
-    private static List<Station> getStations(String... namesOfStations) throws StationNotFoundException {
-        return Arrays.asList(namesOfStations).stream()
-            .map(Model::getStation)
-            .collect(Collectors.toList());
-    }
-
     protected static Station getStation(String name) throws StationNotFoundException {
-        Optional<Station> foundStation = StationRepository.stations().stream()
-            .filter(station -> station.getName().equals(name))
-            .findAny();
+        Optional<Station> foundStation = findStation(name);
         if (!foundStation.isPresent()) {
             throw new StationNotFoundException();
         }
         return foundStation.get();
     }
 
-    protected static Line getLine(String name) throws LineNotFoundException {
-        Optional<Line> foundLine = LineRepository.lines().stream()
+    protected static Optional<Line> findLine(String name) {
+        return LineRepository.lines().stream()
             .filter(line -> line.getName().equals(name))
             .findAny();
+    }
+
+    protected static Line getLine(String name) throws LineNotFoundException {
+        Optional<Line> foundLine = findLine(name);
         if (!foundLine.isPresent()) {
             throw new LineNotFoundException();
         }
         return foundLine.get();
+    }
+
+    private static Optional<Station> findStation(String name) {
+        return StationRepository.stations().stream()
+            .filter(station -> station.getName().equals(name))
+            .findAny();
+    }
+
+    private static List<Station> getStations(String... namesOfStations) throws StationNotFoundException {
+        return Arrays.asList(namesOfStations).stream()
+            .map(Model::getStation)
+            .collect(Collectors.toList());
     }
 }

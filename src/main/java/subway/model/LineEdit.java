@@ -16,15 +16,15 @@ public class LineEdit {
     private Optional<Station> upperBoundStation = Optional.empty();
     private Optional<Station> lowerBoundStation = Optional.empty();
 
-    public void setLineName(String name) throws InvalidStationNameException, LineAlreadyExsitsException {
-        Line.checkValid(name);
-        if (LineRepository.lines().stream()
-            .map(Line::getName)
-            .filter(lineName -> lineName.equals(name))
-            .findAny()
-            .isPresent()) {
+    private static void checkDuplicate(String name) throws LineAlreadyExsitsException {
+        if (Model.findLine(name).isPresent()) {
             throw new LineAlreadyExsitsException();
         }
+    }
+
+    public void setLineName(String name) throws InvalidStationNameException, LineAlreadyExsitsException {
+        Line.checkValid(name);
+        LineEdit.checkDuplicate(name);
         this.name = Optional.of(name);
     }
 
