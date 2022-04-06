@@ -15,7 +15,7 @@ public class Line {
     private final String name;
     private final List<Station> stations = new LinkedList<>();
 
-    private static void checkValid(String name) throws InvalidStationNameException {
+    public static void checkValid(String name) throws InvalidStationNameException {
         if (name.length() < MINIMUM_NAME_LENGTH) {
             throw new InvalidStationNameException();
         }

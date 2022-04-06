@@ -4,25 +4,25 @@ import java.util.Optional;
 
 import subway.enums.ScreenType;
 import subway.io.Input;
+import subway.model.LineEdit;
 import subway.model.Model;
 import subway.view.LineView;
 import subway.view.View;
 
 public class LineController {
     public static Optional<ScreenType> addLine(ScreenType parentScreenType) {
-        String newLineName;
-        String[] newStationNames = new String[2];
+        LineEdit lineEdit = new LineEdit();
         try {
             LineView.askLineNameToAdd();
-            newLineName = Input.readLine();
+            lineEdit.setLineName(Input.readLine());
             View.printEmptyLine();
             LineView.askUpperBoundStationNameToAdd();
-            newStationNames[0] = Input.readLine();
+            lineEdit.setUpperBoundStationName(Input.readLine());
             View.printEmptyLine();
             LineView.askLowerBoundStationNameToAdd();
-            newStationNames[1] = Input.readLine();
+            lineEdit.setLowerBoundStationName(Input.readLine());
             View.printEmptyLine();
-            Model.createLine(newLineName, newStationNames);
+            lineEdit.add();
             LineView.printLineAddedSuccessfully();
         } catch (IllegalArgumentException e) {
             View.printEmptyLine();
