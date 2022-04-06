@@ -65,23 +65,6 @@ public class Model {
             .collect(Collectors.toList());
     }
 
-    // Section Managements
-
-    public static void addSection(String lineName, String stationName, int index) throws
-        LineNotFoundException,
-        StationNotFoundException,
-        IndexOutOfBoundsException
-    {
-        getLine(lineName).add(getStation(stationName), index);
-    }
-
-    public static void deleteSection(String lineName, String stationName) throws
-        LineNotFoundException,
-        StationNotFoundException
-    {
-        getLine(lineName).delete(getStation(stationName));
-    }
-
     // Helpers
 
     private static List<Station> getStations(String... namesOfStations) throws StationNotFoundException {
@@ -90,7 +73,7 @@ public class Model {
             .collect(Collectors.toList());
     }
 
-    private static Station getStation(String name) throws StationNotFoundException {
+    protected static Station getStation(String name) throws StationNotFoundException {
         Optional<Station> foundStation = StationRepository.stations().stream()
             .filter(station -> station.getName().equals(name))
             .findAny();
@@ -100,7 +83,7 @@ public class Model {
         return foundStation.get();
     }
 
-    private static Line getLine(String name) throws LineNotFoundException {
+    protected static Line getLine(String name) throws LineNotFoundException {
         Optional<Line> foundLine = LineRepository.lines().stream()
             .filter(line -> line.getName().equals(name))
             .findAny();

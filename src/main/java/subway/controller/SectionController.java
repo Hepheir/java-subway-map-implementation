@@ -4,26 +4,24 @@ import java.util.Optional;
 
 import subway.enums.ScreenType;
 import subway.io.Input;
-import subway.model.Model;
+import subway.model.SectionEdit;
 import subway.view.SectionView;
 import subway.view.View;
 
 public class SectionController extends Controller {
     public static Optional<ScreenType> addSection(ScreenType parentScreenType) {
-        String lineName;
-        String stationName;
-        int index;
+        SectionEdit sectionEdit = new SectionEdit();
         try {
             SectionView.askLineName();
-            lineName = Input.readLine();
+            sectionEdit.setLine(Input.readLine());
             View.printEmptyLine();
             SectionView.askStationName();
-            stationName = Input.readLine();
+            sectionEdit.setStation(Input.readLine());
             View.printEmptyLine();
             SectionView.askOrder();
-            index = Input.readInt();
+            sectionEdit.setOrder(Input.readInt());
             View.printEmptyLine();
-            Model.addSection(lineName, stationName, index);
+            sectionEdit.add();
             SectionView.printSectionAddedSuccessfully();
         } catch (NumberFormatException e) {
             View.printEmptyLine();
@@ -37,16 +35,15 @@ public class SectionController extends Controller {
     }
 
     public static Optional<ScreenType> deleteSection(ScreenType parentScreenType) {
-        String lineName;
-        String stationName;
+        SectionEdit sectionEdit = new SectionEdit();
         try {
             SectionView.askLineNameToDelete();
-            lineName = Input.readLine();
+            sectionEdit.setLine(Input.readLine());
             View.printEmptyLine();
             SectionView.askStationNameToDelete();
-            stationName = Input.readLine();
+            sectionEdit.setStation(Input.readLine());
             View.printEmptyLine();
-            Model.deleteSection(lineName, stationName);
+            sectionEdit.delete();
             SectionView.printSectionDeletedSuccessfully();
         } catch (IllegalArgumentException e) {
             View.printEmptyLine();
