@@ -12,4 +12,8 @@ public class MainView {
     public static final void printStationName(String stationName) {
         View.printInfo(stationName);
     }
+
+    public static final void printSubwayMapTitle() {
+        View.printHeader("지하철 노선도");
+    }
 }
