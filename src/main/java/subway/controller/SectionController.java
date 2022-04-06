@@ -19,7 +19,7 @@ public class SectionController extends Controller {
             sectionEdit.setStation(Input.readLine());
             View.printEmptyLine();
             SectionView.askOrder();
-            sectionEdit.setOrder(Input.readInt());
+            sectionEdit.setOrder(Input.readInt()-1);
             View.printEmptyLine();
             sectionEdit.add();
             SectionView.printSectionAddedSuccessfully();
