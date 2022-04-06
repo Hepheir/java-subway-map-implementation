@@ -25,6 +25,18 @@ public class Controller {
         return Optional.empty();
     }
 
+    protected static int getInt() throws NumberFormatException {
+        return Input.readInt();
+    }
+
+    protected static String getString() {
+        return Input.readLine();
+    }
+
+    protected static Character getCharacter() {
+        return Input.readChar();
+    }
+
     private static void renderCommandsOutOf(ScreenType screenType) {
         CommandRepository.getCommandsOf(screenType).forEach(Controller::renderCommand);
     }

@@ -3,7 +3,6 @@ package subway.controller;
 import java.util.Optional;
 
 import subway.enums.ScreenType;
-import subway.io.Input;
 import subway.model.SectionEdit;
 import subway.view.SectionView;
 
@@ -12,13 +11,13 @@ public class SectionController extends Controller {
         SectionEdit sectionEdit = new SectionEdit();
         try {
             SectionView.askLineName();
-            sectionEdit.setLine(Input.readLine());
+            sectionEdit.setLine(getString());
             SectionView.printEmptyLine();
             SectionView.askStationName();
-            sectionEdit.setStation(Input.readLine());
+            sectionEdit.setStation(getString());
             SectionView.printEmptyLine();
             SectionView.askOrder();
-            sectionEdit.setOrder(Input.readInt()-1);
+            sectionEdit.setOrder(getInt()-1);
             SectionView.printEmptyLine();
             sectionEdit.add();
             SectionView.printSectionAddedSuccessfully();
@@ -37,10 +36,10 @@ public class SectionController extends Controller {
         SectionEdit sectionEdit = new SectionEdit();
         try {
             SectionView.askLineNameToDelete();
-            sectionEdit.setLine(Input.readLine());
+            sectionEdit.setLine(getString());
             SectionView.printEmptyLine();
             SectionView.askStationNameToDelete();
-            sectionEdit.setStation(Input.readLine());
+            sectionEdit.setStation(getString());
             SectionView.printEmptyLine();
             sectionEdit.delete();
             SectionView.printSectionDeletedSuccessfully();

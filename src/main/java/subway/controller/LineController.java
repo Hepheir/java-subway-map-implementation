@@ -3,23 +3,22 @@ package subway.controller;
 import java.util.Optional;
 
 import subway.enums.ScreenType;
-import subway.io.Input;
 import subway.model.LineEdit;
 import subway.model.Model;
 import subway.view.LineView;
 
-public class LineController {
+public class LineController extends Controller {
     public static Optional<ScreenType> addLine(ScreenType screenType) {
         LineEdit lineEdit = new LineEdit();
         try {
             LineView.askLineNameToAdd();
-            lineEdit.setLineName(Input.readLine());
+            lineEdit.setLineName(getString());
             LineView.printEmptyLine();
             LineView.askUpperBoundStationNameToAdd();
-            lineEdit.setUpperBoundStationName(Input.readLine());
+            lineEdit.setUpperBoundStationName(getString());
             LineView.printEmptyLine();
             LineView.askLowerBoundStationNameToAdd();
-            lineEdit.setLowerBoundStationName(Input.readLine());
+            lineEdit.setLowerBoundStationName(getString());
             LineView.printEmptyLine();
             lineEdit.add();
             LineView.printLineAddedSuccessfully();
@@ -34,7 +33,7 @@ public class LineController {
     public static Optional<ScreenType> deleteLine(ScreenType screenType) {
         try {
             LineView.askLineNameToDelete();
-            Model.deleteLine(Input.readLine());
+            Model.deleteLine(getString());
             LineView.printEmptyLine();
             LineView.printLineDeletedSuccessfully();
         } catch (Exception e) {

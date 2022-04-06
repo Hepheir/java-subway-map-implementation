@@ -6,7 +6,7 @@ import subway.enums.ScreenType;
 import subway.model.Model;
 import subway.view.MainView;
 
-public class MainController {
+public class MainController extends Controller {
     public static Optional<ScreenType> openStationManager(ScreenType screenType) {
         return Optional.of(ScreenType.STATION_MANAGEMENT);
     }
