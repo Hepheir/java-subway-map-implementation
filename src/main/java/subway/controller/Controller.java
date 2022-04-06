@@ -17,11 +17,11 @@ public class Controller {
         return promptComandFrom(screenType).executeFrom(screenType);
     }
 
-    public static Optional<ScreenType> back(ScreenType parentScreenType) {
-        return Optional.of(parentScreenType);
+    public static Optional<ScreenType> back(ScreenType screenType) {
+        return Optional.of(ScreenType.MAIN);
     }
 
-    public static Optional<ScreenType> quit(ScreenType parentScreenType) {
+    public static Optional<ScreenType> quit(ScreenType screenType) {
         return Optional.empty();
     }
 

@@ -10,7 +10,7 @@ import subway.view.LineView;
 import subway.view.View;
 
 public class LineController {
-    public static Optional<ScreenType> addLine(ScreenType parentScreenType) {
+    public static Optional<ScreenType> addLine(ScreenType screenType) {
         LineEdit lineEdit = new LineEdit();
         try {
             LineView.askLineNameToAdd();
@@ -32,7 +32,7 @@ public class LineController {
         return Optional.of(ScreenType.MAIN);
     }
 
-    public static Optional<ScreenType> deleteLine(ScreenType parentScreenType) {
+    public static Optional<ScreenType> deleteLine(ScreenType screenType) {
         try {
             LineView.askLineNameToDelete();
             Model.deleteLine(Input.readLine());
@@ -46,7 +46,7 @@ public class LineController {
         return Optional.of(ScreenType.MAIN);
     }
 
-    public static Optional<ScreenType> listLine(ScreenType parentScreenType) {
+    public static Optional<ScreenType> listLine(ScreenType screenType) {
         LineView.printLineList();
         Model.getAllLineNames().forEach(View::printInfo);
         View.printEmptyLine();

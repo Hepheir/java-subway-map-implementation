@@ -8,20 +8,20 @@ import subway.view.MainView;
 import subway.view.View;
 
 public class MainController {
-    public static Optional<ScreenType> openStationManager(ScreenType parentScreenType) {
+    public static Optional<ScreenType> openStationManager(ScreenType screenType) {
         return Optional.of(ScreenType.STATION_MANAGEMENT);
     }
 
-    public static Optional<ScreenType> openLineManager(ScreenType parentScreenType) {
+    public static Optional<ScreenType> openLineManager(ScreenType screenType) {
         return Optional.of(ScreenType.LINE_MANAGEMENT);
     }
 
-    public static Optional<ScreenType> openSectionManager(ScreenType parentScreenType) {
+    public static Optional<ScreenType> openSectionManager(ScreenType screenType) {
         return Optional.of(ScreenType.SECTION_MANAGEMENT);
     }
 
-    public static Optional<ScreenType> openSubwayMap(ScreenType parentScreenType) {
-        View.printScreenName(parentScreenType.getValue());
+    public static Optional<ScreenType> openSubwayMap(ScreenType screenType) {
+        View.printScreenName(screenType.getValue());
         Model.getAllLineNames().forEach(lineName -> {
             MainView.printLineName(lineName);
             MainView.printLineAndStationsSeperator();

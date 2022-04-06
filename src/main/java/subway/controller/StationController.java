@@ -9,7 +9,7 @@ import subway.view.StationView;
 import subway.view.View;
 
 public class StationController extends Controller {
-    public static Optional<ScreenType> addStation(ScreenType parentScreenType) {
+    public static Optional<ScreenType> addStation(ScreenType screenType) {
         try {
             StationView.askStationNameToAdd();
             Model.createStation(Input.readLine());
@@ -23,7 +23,7 @@ public class StationController extends Controller {
         return Optional.of(ScreenType.MAIN);
     }
 
-    public static Optional<ScreenType> deleteStation(ScreenType parentScreenType) {
+    public static Optional<ScreenType> deleteStation(ScreenType screenType) {
         try {
             StationView.askStationNameToDelete();
             Model.deleteStation(Input.readLine());
@@ -37,7 +37,7 @@ public class StationController extends Controller {
         return Optional.of(ScreenType.MAIN);
     }
 
-    public static Optional<ScreenType> listStation(ScreenType parentScreenType) {
+    public static Optional<ScreenType> listStation(ScreenType screenType) {
         StationView.printStationList();
         Model.getAllStationNames().forEach(View::printInfo);
         View.printEmptyLine();

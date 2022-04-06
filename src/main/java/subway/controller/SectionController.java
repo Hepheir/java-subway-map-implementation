@@ -9,7 +9,7 @@ import subway.view.SectionView;
 import subway.view.View;
 
 public class SectionController extends Controller {
-    public static Optional<ScreenType> addSection(ScreenType parentScreenType) {
+    public static Optional<ScreenType> addSection(ScreenType screenType) {
         SectionEdit sectionEdit = new SectionEdit();
         try {
             SectionView.askLineName();
@@ -34,7 +34,7 @@ public class SectionController extends Controller {
         return Optional.of(ScreenType.MAIN);
     }
 
-    public static Optional<ScreenType> deleteSection(ScreenType parentScreenType) {
+    public static Optional<ScreenType> deleteSection(ScreenType screenType) {
         SectionEdit sectionEdit = new SectionEdit();
         try {
             SectionView.askLineNameToDelete();
