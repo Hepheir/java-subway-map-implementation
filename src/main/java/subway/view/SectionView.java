@@ -1,6 +1,6 @@
 package subway.view;
 
-public class SectionView {
+public class SectionView extends View {
     public static void askLineName() {
         View.printHeader("노선을 입력하세요.");
     }

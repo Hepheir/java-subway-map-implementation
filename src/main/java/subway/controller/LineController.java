@@ -7,7 +7,6 @@ import subway.io.Input;
 import subway.model.LineEdit;
 import subway.model.Model;
 import subway.view.LineView;
-import subway.view.View;
 
 public class LineController {
     public static Optional<ScreenType> addLine(ScreenType screenType) {
@@ -15,20 +14,20 @@ public class LineController {
         try {
             LineView.askLineNameToAdd();
             lineEdit.setLineName(Input.readLine());
-            View.printEmptyLine();
+            LineView.printEmptyLine();
             LineView.askUpperBoundStationNameToAdd();
             lineEdit.setUpperBoundStationName(Input.readLine());
-            View.printEmptyLine();
+            LineView.printEmptyLine();
             LineView.askLowerBoundStationNameToAdd();
             lineEdit.setLowerBoundStationName(Input.readLine());
-            View.printEmptyLine();
+            LineView.printEmptyLine();
             lineEdit.add();
             LineView.printLineAddedSuccessfully();
         } catch (IllegalArgumentException e) {
-            View.printEmptyLine();
-            View.printError(e.getMessage());
+            LineView.printEmptyLine();
+            LineView.printError(e.getMessage());
         }
-        View.printEmptyLine();
+        LineView.printEmptyLine();
         return Optional.of(ScreenType.MAIN);
     }
 
@@ -36,20 +35,20 @@ public class LineController {
         try {
             LineView.askLineNameToDelete();
             Model.deleteLine(Input.readLine());
-            View.printEmptyLine();
+            LineView.printEmptyLine();
             LineView.printLineDeletedSuccessfully();
         } catch (Exception e) {
-            View.printEmptyLine();
-            View.printError(e.getMessage());
+            LineView.printEmptyLine();
+            LineView.printError(e.getMessage());
         }
-        View.printEmptyLine();
+        LineView.printEmptyLine();
         return Optional.of(ScreenType.MAIN);
     }
 
     public static Optional<ScreenType> listLine(ScreenType screenType) {
         LineView.printLineList();
-        Model.getAllLineNames().forEach(View::printInfo);
-        View.printEmptyLine();
+        Model.getAllLineNames().forEach(LineView::printInfo);
+        LineView.printEmptyLine();
         return Optional.of(ScreenType.MAIN);
     }
 }

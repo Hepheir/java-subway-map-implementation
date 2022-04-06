@@ -1,6 +1,6 @@
 package subway.view;
 
-public class LineView {
+public class LineView extends View {
     public static void askLineNameToAdd() {
         View.printHeader("등록할 노선 이름을 입력하세요.");
     }

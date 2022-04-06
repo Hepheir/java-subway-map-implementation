@@ -1,6 +1,6 @@
 package subway.view;
 
-public class StationView {
+public class StationView extends View {
     public static void askStationNameToAdd() {
         View.printHeader("등록할 역 이름을 입력하세요.");
     }

@@ -6,7 +6,6 @@ import subway.enums.ScreenType;
 import subway.io.Input;
 import subway.model.SectionEdit;
 import subway.view.SectionView;
-import subway.view.View;
 
 public class SectionController extends Controller {
     public static Optional<ScreenType> addSection(ScreenType screenType) {
@@ -14,23 +13,23 @@ public class SectionController extends Controller {
         try {
             SectionView.askLineName();
             sectionEdit.setLine(Input.readLine());
-            View.printEmptyLine();
+            SectionView.printEmptyLine();
             SectionView.askStationName();
             sectionEdit.setStation(Input.readLine());
-            View.printEmptyLine();
+            SectionView.printEmptyLine();
             SectionView.askOrder();
             sectionEdit.setOrder(Input.readInt()-1);
-            View.printEmptyLine();
+            SectionView.printEmptyLine();
             sectionEdit.add();
             SectionView.printSectionAddedSuccessfully();
         } catch (NumberFormatException e) {
-            View.printEmptyLine();
+            SectionView.printEmptyLine();
             SectionView.printErrorNotANumber();
         } catch (IllegalArgumentException e) {
-            View.printEmptyLine();
-            View.printError(e.getMessage());
+            SectionView.printEmptyLine();
+            SectionView.printError(e.getMessage());
         }
-        View.printEmptyLine();
+        SectionView.printEmptyLine();
         return Optional.of(ScreenType.MAIN);
     }
 
@@ -39,17 +38,17 @@ public class SectionController extends Controller {
         try {
             SectionView.askLineNameToDelete();
             sectionEdit.setLine(Input.readLine());
-            View.printEmptyLine();
+            SectionView.printEmptyLine();
             SectionView.askStationNameToDelete();
             sectionEdit.setStation(Input.readLine());
-            View.printEmptyLine();
+            SectionView.printEmptyLine();
             sectionEdit.delete();
             SectionView.printSectionDeletedSuccessfully();
         } catch (IllegalArgumentException e) {
-            View.printEmptyLine();
-            View.printError(e.getMessage());
+            SectionView.printEmptyLine();
+            SectionView.printError(e.getMessage());
         }
-        View.printEmptyLine();
+        SectionView.printEmptyLine();
         return Optional.of(ScreenType.MAIN);
     }
 }

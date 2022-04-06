@@ -1,6 +1,6 @@
 package subway.view;
 
-public class MainView {
+public class MainView extends View {
     public static final void printLineName(String lineName) {
         View.printInfo(lineName);
     }

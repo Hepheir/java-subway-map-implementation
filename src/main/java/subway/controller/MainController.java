@@ -5,7 +5,6 @@ import java.util.Optional;
 import subway.enums.ScreenType;
 import subway.model.Model;
 import subway.view.MainView;
-import subway.view.View;
 
 public class MainController {
     public static Optional<ScreenType> openStationManager(ScreenType screenType) {
@@ -27,7 +26,7 @@ public class MainController {
             MainView.printLineAndStationsSeperator();
             Model.getAllStationNamesOfLine(lineName)
                 .forEach(MainView::printStationName);
-            View.printEmptyLine();
+            MainView.printEmptyLine();
         });
         return Optional.of(ScreenType.MAIN);
     }
